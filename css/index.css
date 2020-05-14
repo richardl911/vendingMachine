@@ -1,0 +1,7 @@
+#mainMenu {
+  width : 50%;
+}
+
+.menuItem {
+  overflow : hidden !important;
+}

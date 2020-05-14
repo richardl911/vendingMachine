@@ -5,22 +5,27 @@
     <title> Vending Machine </title>
 
     <link rel='stylesheet' href='./css/jquery-ui.min.css'>
+    <link rel='stylesheet' href='./css/index.css'>
 
     <script type='text/javascript' src='./script/index.js'></script>
+    <script type='text/javascript' src='./script/inputTypes.js'></script>
 
     <script type='text/javascript' src='./script/lib/jquery-3.3.1.min.js'></script>
     <script type='text/javascript' src='./script/lib/jquery-ui.min.js'></script>
   </head>
 
   <body>
+    <div id='dialog'> <p> </p> </div>
+
     <div id ='mainMenu'>
       <h3> Enter All Your Coins in Your Pocket </h3>
-      <div id='coinsInPocket'>
-        <p> Your coins </p>
+      <div id='coinsInPocket' class='menuItem'>
+        <p> Enter the number of coins you have ... </p>
+        <div id='coinList'></div>
       </div>
 
       <h3> Place Coins In Vendor</h3>
-      <div id='vendor'>
+      <div id='vendor' class='menuItem'>
         <p> Vendor menu </p>
       </div>
     </div>
