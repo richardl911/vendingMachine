@@ -17,11 +17,14 @@ table {
   text-align : center;
 }
 
-th {
+th, td {
   border : 1px solid black;
   padding : 0px 10px;
 }
 
+tr:nth-child(even) {
+  background-color : #dddd;
+}
 
 .flex-container {
   display : flex;
@@ -66,4 +69,10 @@ th {
 
 #insertCoinTable td.name::first-letter {
   text-transform : uppercase;
+}
+
+.buttonStyle {
+  font-style : 20px;
+  margin : 5px;
+
 }

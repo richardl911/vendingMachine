@@ -175,7 +175,7 @@ function getInsertCoinDOM(name, quantity) {
   return `<tr id='${name}_info' class='${name}'>
             <td class='name'> ${name} </td>
             <td class='quantity'> ${quantity} </td>
-            <td> <button id='insert_${name}' class='center'></button> </td>
+            <td> <button id='insert_${name}' class='buttonStyle'></button> </td>
          </tr>`;
 }
 
