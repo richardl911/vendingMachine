@@ -18,15 +18,24 @@
     <div id='dialog'> <p> </p> </div>
 
     <div id ='mainMenu'>
-      <h3> Enter All Your Coins in Your Pocket </h3>
+      <h3 id='userInput'> Enter All Your Coins in Your Pocket </h3>
       <div id='coinsInPocket' class='menuItem'>
         <p> Enter the number of coins you have ... </p>
         <div id='coinList'></div>
       </div>
 
-      <h3> Place Coins In Vendor</h3>
+      <h3 id='insertCoins'> Place Coins In Vendor</h3>
       <div id='vendor' class='menuItem'>
-        <p> Vendor menu </p>
+        <p> Insert Coin </p>
+
+        <table id='insertCoinTable'>
+          <tr>
+            <th> Coin Name</th>
+            <th> Available </th>
+            <th> Insert </th>
+          </tr>
+        </table>
+
       </div>
     </div>
 

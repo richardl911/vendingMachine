@@ -1,10 +1,18 @@
-let coinInfo = {};
+let userCoins = {};
 
 document.addEventListener('DOMContentLoaded', function() {
-  updateCoinList(coinDef);
-
   /// Configue dialog box
   $('#dialog').dialog({ autoOpen : false });
+
+  createCoinList(coinDef);
+  createVendingTable();
+
+  $('h3#insertCoins').on('click', () => {
+    console.log('what');
+    updateTableQuantity();
+  });
+
+
 
 
   animateUI();
@@ -21,7 +29,7 @@ function animateUI() {
 //  $('#spinner2').spinner();
 }
 
-function updateCoinList(coinDef) {
+function createCoinList(coinDef) {
   // Empty out list
   $('#coinList').empty();
 
@@ -30,7 +38,7 @@ function updateCoinList(coinDef) {
     if(coin.name == undefined || coin.val == undefined) continue;
 
     let name = coin.name;
-    if(coinInfo[name] == undefined) coinInfo[name] = { val : coin.val, quantity : 0 };
+    if(userCoins[name] == undefined) userCoins[name] = { val : coin.val, quantity : 0 };
 
     // Render coin
     let cSelector = `#coinList input#${name}`;
@@ -47,13 +55,13 @@ function updateCoinList(coinDef) {
 
       if(!isDigit(+val)) {
         openDialog('Error', `${val} is not a valid number!!!`);
-        _$.val(coinInfo[name].quantity);
+        _$.val(userCoins[name].quantity);
         return;
       }
 
       // Update coin info
-      coinInfo[name].quantity = +val;
-      console.log(`${name} : x${+val}`);
+      userCoins[name].quantity = +val;
+      console.log(`${name} : x ${+val}`);
     });
   }
 
@@ -71,6 +79,46 @@ function isDigit(str) {
   return !isNaN(str);
 }
 
+
+
+function createVendingTable(){
+  for(let name in userCoins) {
+    let coinDef = userCoins[name];
+
+    // Render rows to display coins that can be inserted
+    let bSelector = `button#insert_${name}`;
+    $('#insertCoinTable').append(getCoinRowDOM(name, coinDef.quantity));
+    $(bSelector).button({
+      icon : 'ui-icon-plusthick',
+      showLabel : false,
+    });
+
+    // Add listener to button
+    let clickFcn = () => {
+      if(userCoins[name].quantity <= 0) return;
+      userCoins[name].quantity--;
+      updateTableQuantity(name);
+    }
+    $(bSelector).on('click', clickFcn.bind(null));
+  }
+}
+
+function updateTableQuantity(name=null) {
+  // Default update all of the quantity
+  if(name == null) {
+    for(let name in userCoins) {
+      let coinsLeft = userCoins[name].quantity;
+    console.log(name, coinsLeft);
+      $(`tr.${name} .quantity`).html(userCoins[name].quantity);
+    }
+  } else {
+    if(userCoins[name] == undefined) return;
+    $(`tr.${name} .quantity`).html(userCoins[name].quantity);
+  }
+}
+
+
+
 function getCoinDOM(name, quantity=0) {
   return `<div>
             <label for=${name}>${name}</label>
@@ -78,6 +126,11 @@ function getCoinDOM(name, quantity=0) {
           </div>`;
 }
 
-
-
+function getCoinRowDOM(name, quantity) {
+  return `<tr id='${name}_info' class='${name}'>
+            <td class='name'> ${name} </td>
+            <td class='quantity'> ${quantity} </td>
+            <td> <button id='insert_${name}'></button> </td>
+         </tr>`;
+}
 
