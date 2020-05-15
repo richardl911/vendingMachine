@@ -37,3 +37,22 @@ th {
   padding : 2px;
   border : 1px solid green;
 }
+
+.pocket {
+  margin : 5px;
+}
+
+.pocket label{
+  min-width : 100px;
+  display : inline-block;
+  padding-right: 10px;
+}
+
+.pocket label::first-letter {
+  text-transform: uppercase;
+}
+
+.pocket span {
+  width : 100px;
+}
+

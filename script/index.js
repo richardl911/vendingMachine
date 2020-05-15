@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function animateUI() {
   // Create menus
-  $('#mainMenu').accordion({heightSyle : 'content'});
+  $('#mainMenu').accordion({heightStyle : 'content'});
 
   // Create spinners
 //  $('#spinner').spinner();
@@ -130,7 +130,7 @@ function updateTableQuantity(name=null) {
 
 
 function getPocketDOM(name, quantity=0) {
-  return `<div>
+  return `<div class='pocket'>
             <label for=${name}>${name}</label>
             <input id=${name} name=${name} min='0' placeholder='0' value=${quantity}></input>
           </div>`;
