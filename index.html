@@ -49,21 +49,28 @@
           <div class='my-border'>
             <fieldset id='selectItem'>
               <legend> Select Item * </legend>
-              <p> Note : Please have sufficient fund before selecting</p>
+              <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
             </fieldset>
           </div>
         </div>
 
 
         <div class='flex-child'>
-          <div> Vending Machine </div>
-          <table id='vendingMachine'>
-            <tr>
-              <th> Item Name </th>
-              <th> Quantity </th>
-              <th> Cost </th>
-            </tr>
-          </table>
+          <fieldset>
+            <legend> Vending Machine </legend>
+            <table id='vendingMachine'>
+              <tr>
+                <th> Item Name </th>
+                <th> Quantity </th>
+                <th> Cost </th>
+              </tr>
+            </table>
+            <div> Coins Inserted : <span id='amount'>0.00<span> </div>
+            <button id='returnB'> Return </button>
+          </fieldset>
+
+
+
         </div>
 
       </div>

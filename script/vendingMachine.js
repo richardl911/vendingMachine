@@ -1,6 +1,7 @@
 function vendingMachine() {
   this.itemList = {};
-  this.sumOfCoin = 0;
+  this.creditVal = 0;
+  this.insertedCoin = {};
 }
 
 vendingMachine.prototype.addItem = function(name, cost, quantity) {
@@ -15,21 +16,26 @@ vendingMachine.prototype.addItem = function(name, cost, quantity) {
   return true;
 }
 
-vendingMachine.prototype.getValue = function() {
-  return this.sumOfCoins;
+vendingMachine.prototype.getCredit = function() {
+  return this.creditVal;
 }
 
-vendingMachine.prototype.addCoin = function(val) {
-  this.sumOfCoins += val;
-  return this.sumOfCoins;
+vendingMachine.prototype.addCoin = function(name, val) {
+  this.creditVal += val;
+  this.insertedCoin[name] = ++this.insertedCoin[name] || 1;
+  return this.creditVal;
 }
 
 vendingMachine.prototype.returnCoins = function() {
-  this.sumOfCoins = 0;
+  this.creditVal = 0;
+  let temp = this.insertedCoin;
+  this.insertedCoin = {};
+  return temp;
 }
 
 vendingMachine.prototype.getItem = function(name) {
   if(this.itemList[name] == undefined) return null;
   return this.itemList[name];
 }
+
 

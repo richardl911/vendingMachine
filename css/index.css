@@ -52,7 +52,6 @@ th {
   text-transform: uppercase;
 }
 
-.pocket span {
-  width : 100px;
+#amount::before {
+  content : "$";
 }
-

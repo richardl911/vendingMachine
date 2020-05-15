@@ -2,6 +2,7 @@ let userCoins = {};
 let vending;
 
 document.addEventListener('DOMContentLoaded', function() {
+
   /// Configue dialog box
   $('#dialog').dialog({ autoOpen : false });
 
@@ -9,12 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
   createVendingTab(items);
 
   $('h3#insertCoins').on('click', () => {
-    console.log('what');
-    updateTableQuantity();
+    updateCoinQuantity();
   });
 
 
-
+  $('#returnB').on('click', returnCoins);
 
   animateUI();
 
@@ -24,10 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function animateUI() {
   // Create menus
   $('#mainMenu').accordion({heightStyle : 'content'});
-
-  // Create spinners
-//  $('#spinner').spinner();
-//  $('#spinner2').spinner();
 }
 
 function createCoinTab(coinDef) {
@@ -81,9 +77,8 @@ function isDigit(str) {
 }
 
 
-
 function createVendingTab(){
-  // Rend and add items to vending machine
+  // Render and add items to vending machine
   vending = new vendingMachine();
   for(let item of items) {
     vending.addItem(item.name, item.cost, 10);
@@ -94,8 +89,10 @@ function createVendingTab(){
     // Create radio button
     $('#selectItem').prepend(getSelectItemDOM(item.name));
   }
+  $('#returnB').button();
 
-  // Rend user input
+
+  // Render user input
   $('#selectItem input').checkboxradio();
   for(let name in userCoins) {
     let coinDef = userCoins[name];
@@ -111,15 +108,38 @@ function createVendingTab(){
     // Add listener to button
     let clickFcn = () => {
       if(userCoins[name].quantity <= 0) return;
+
+      // Update credit amount
       userCoins[name].quantity--;
-      updateTableQuantity(name);
+      vending.addCoin(name, coinDef.val);
+
+      // Re-render
+      renderVendorTable(name);
     }
     $(bSelector).on('click', clickFcn.bind(null));
   }
 
 }
 
-function updateTableQuantity(name=null) {
+
+
+function returnCoins() {
+  let coins = vending.returnCoins();
+
+  for(let name in coins) {
+    let num = coins[name];
+    userCoins[name].quantity += num;
+  }
+
+  renderVendorTable();
+}
+
+function renderVendorTable(name=null) {
+  updateCoinQuantity(name);
+  updateCredit();
+}
+
+function updateCoinQuantity(name) {
   // Default update all of the quantity
   if(name == null) {
     for(let name in userCoins) {
@@ -133,6 +153,12 @@ function updateTableQuantity(name=null) {
   }
 }
 
+function updateCredit() {
+  let credit = vending.getCredit();
+  credit = credit >= 100 ? (credit/100).toFixed(2) : credit;
+  credit = (Math.round(credit * 100) / 100).toFixed(2);
+  $('#amount').text(credit);
+}
 
 function getPocketDOM(name, quantity=0) {
   return `<div class='pocket'>
