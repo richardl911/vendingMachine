@@ -123,9 +123,17 @@ function createVendingTab(){
   $('#selectItemForm').on('change', () => {
     let selected = $('#selectItemForm input[name="pickThis"]:checked').val();
     if(vending.retrieveItem(selected)) console.log('Got item : ', selected);
+    else openDialog('Error', `You have insufficient fund ($${getDollars(vending.getCredit())}) to buy -${selected}-`);
     returnCoins();
     updateItemQuantity();
 
+    // Deselect radio button at X amount of time
+    setTimeout( () => {
+      $('#selectItemForm input[name="pickThis"]').prop('checked', false);
+      $('#selectItemForm input').checkboxradio('refresh');
+    }, 750);
+
+    return;
   });
 }
 
