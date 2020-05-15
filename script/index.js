@@ -87,7 +87,12 @@ function createVendingTab(){
   vending = new vendingMachine();
   for(let item of items) {
     vending.addItem(item.name, item.cost, 10);
+
+    // Create vending table display
     $('#vendingMachine').append(getItemDisplayDOM(item.name, item.cost, 10));
+
+    // Create radio button
+    $('#selectItem').prepend(getSelectItemDOM(item.name));
   }
 
   // Rend user input
@@ -97,7 +102,7 @@ function createVendingTab(){
 
     // Render rows to display coins that can be inserted by the user
     let bSelector = `button#insert_${name}`;
-    $('#insertCoinTable').append(getInsertDOM(name, coinDef.quantity));
+    $('#insertCoinTable').append(getInsertCoinDOM(name, coinDef.quantity));
     $(bSelector).button({
       icon : 'ui-icon-plusthick',
       showLabel : false,
@@ -136,7 +141,7 @@ function getPocketDOM(name, quantity=0) {
           </div>`;
 }
 
-function getInsertDOM(name, quantity) {
+function getInsertCoinDOM(name, quantity) {
   return `<tr id='${name}_info' class='${name}'>
             <td class='name'> ${name} </td>
             <td class='quantity'> ${quantity} </td>
@@ -152,4 +157,7 @@ function getItemDisplayDOM(name, cost, quantity) {
           </td>`;
 }
 
-
+function getSelectItemDOM(name) {
+  return `<label for='${name}Radio'> ${name} </label>
+         <input type='radio' id='${name}Radio' name='vendRadio'></input>`;
+}
