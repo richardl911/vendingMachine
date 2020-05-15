@@ -95,7 +95,7 @@ ul#bag {
 
 ul#bag li {
   float : left;
-  padding : 5px;
+  padding : 5px 10px;
   margin : 2px;
   background : #E9E9E9;
 }

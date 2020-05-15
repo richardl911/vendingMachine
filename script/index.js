@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCoinQuantity();
   });
 
+  $('h3#userInput').on('click', () => {
+    updateUserCoins();
+  });
+
 
   $('#returnB').on('click', returnCoins);
 
@@ -189,6 +193,13 @@ function updateItemQuantity(name=null) {
     let item = vending.getItem(name);
     if(item == null) return;
     $(`#vendingTable tr.${name} .quantity`).html(item.quantity); 
+  }
+}
+
+function updateUserCoins() {
+  for(let name in userCoins) {
+    let def = userCoins[name];
+    $(`.pocket input#${name}`).val(def.quantity);
   }
 }
 
