@@ -67,6 +67,10 @@ tr:nth-child(even) {
   display : block;
 }
 
+.centerT {
+  text-align : center;
+}
+
 #insertCoinTable td.name::first-letter {
   text-transform : uppercase;
 }
@@ -74,5 +78,13 @@ tr:nth-child(even) {
 .buttonStyle {
   font-style : 20px;
   margin : 5px;
+}
 
+#creditContainer {
+  text-align : center;
+  padding : 20px 0px;
+}
+
+#amount {
+  color : red;
 }
