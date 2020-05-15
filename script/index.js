@@ -84,16 +84,16 @@ function createVendingTab(){
     vending.addItem(item.name, item.cost, 10);
 
     // Create vending table display
-    $('#vendingMachine').append(getItemDisplayDOM(item.name, getDollars(item.cost), 10));
+    $('#vendingTable').append(getItemDisplayDOM(item.name, getDollars(item.cost), 10));
 
     // Create radio button
-    $('#selectItem').prepend(getSelectItemDOM(item.name));
+    $('#selectItemForm').append(getSelectItemDOM(item.name));
   }
   $('#returnB').button();
 
 
   // Render user input
-  $('#selectItem input').checkboxradio();
+  $('#selectItemForm input').checkboxradio();
   for(let name in userCoins) {
     let coinDef = userCoins[name];
 
@@ -114,11 +114,19 @@ function createVendingTab(){
       vending.addCoin(name, coinDef.val);
 
       // Re-render
-      renderVendorTable(name);
+      renderVendingTab(name);
     }
     $(bSelector).on('click', clickFcn.bind(null));
   }
 
+  // Item selection listener
+  $('#selectItemForm').on('change', () => {
+    let selected = $('#selectItemForm input[name="pickThis"]:checked').val();
+    if(vending.retrieveItem(selected)) console.log('Got item : ', selected);
+    returnCoins();
+    updateItemQuantity();
+
+  });
 }
 
 
@@ -131,27 +139,43 @@ function returnCoins() {
     userCoins[name].quantity += num;
   }
 
-  renderVendorTable();
+  renderVendingTab();
 }
 
-function renderVendorTable(name=null) {
+function renderVendingTab(name=null) {
   updateCoinQuantity(name);
   updateCredit();
+  updateItemQuantity();
 }
 
-function updateCoinQuantity(name) {
+function updateCoinQuantity(name=null) {
   // Default update all of the quantity
   if(name == null) {
     for(let name in userCoins) {
       let coinsLeft = userCoins[name].quantity;
-    console.log(name, coinsLeft);
-      $(`tr.${name} .quantity`).html(userCoins[name].quantity);
+      $(`#insertCoinTable tr.${name} .quantity`).html(userCoins[name].quantity);
     }
   } else {
     if(userCoins[name] == undefined) return;
-    $(`tr.${name} .quantity`).html(userCoins[name].quantity);
+    $(`#insertCoinTable tr.${name} .quantity`).html(userCoins[name].quantity);
   }
 }
+
+function updateItemQuantity(name=null) {
+  // Default update all of the quantity
+  if(name == null) {
+    let list = vending.getItemList();
+    for(let name in list) {
+      let item = list[name];
+      $(`#vendingTable tr.${name} .quantity`).html(item.quantity); 
+    }
+  } else {
+    let item = vending.getItem(name);
+    if(item == null) return;
+    $(`#vendingTable tr.${name} .quantity`).html(item.quantity); 
+  }
+}
+
 
 function updateCredit() {
   let credit = vending.getCredit();
@@ -189,5 +213,5 @@ function getItemDisplayDOM(name, cost, quantity) {
 
 function getSelectItemDOM(name) {
   return `<label for='${name}Radio'> ${name} </label>
-         <input type='radio' id='${name}Radio' name='vendRadio'></input>`;
+         <input type='radio' id='${name}Radio' name='pickThis' value=${name}></input>`;
 }
