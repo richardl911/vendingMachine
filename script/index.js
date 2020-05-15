@@ -4,7 +4,14 @@ let vending;
 document.addEventListener('DOMContentLoaded', function() {
 
   /// Configue dialog box
-  $('#dialog').dialog({ autoOpen : false });
+  $('#dialog').dialog({
+    autoOpen : false,
+    buttons : {
+      "Okay" : function() {
+        $(this).dialog('close');
+      }
+    }
+  });
 
   createCoinTab(coinDef);
   createVendingTab(items);
@@ -123,7 +130,7 @@ function createVendingTab(){
   $('#selectItemForm').on('change', () => {
     let selected = $('#selectItemForm input[name="pickThis"]:checked').val();
     if(vending.retrieveItem(selected)) console.log('Got item : ', selected);
-    else openDialog('Error', `You have insufficient fund ($${getDollars(vending.getCredit())}) to buy -${selected}-`);
+    else openDialog('Error', `You have insufficient fund ($${getDollars(vending.getCredit())}) to buy -${selected}-. Funds are refunded.`);
     returnCoins();
     updateItemQuantity();
 
