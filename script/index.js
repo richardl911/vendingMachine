@@ -133,6 +133,7 @@ function createVendingTab(){
     else openDialog('Error', `You have insufficient fund ($${getDollars(vending.getCredit())}) to buy -${selected}-. Funds are refunded.`);
     returnCoins();
     updateItemQuantity();
+    addItemToBag(selected);
 
     // Deselect radio button at X amount of time
     setTimeout( () => {
@@ -197,11 +198,18 @@ function updateCredit() {
   $('#amount').text(getDollars(credit));
 }
 
+
 function getDollars(val) {
   val = val >= 100 ? (val/100).toFixed(2) : val;
   val = (Math.round(val * 100) / 100).toFixed(2);
   return val;
 }
+
+function addItemToBag(name) {
+  $('#bag').show();
+  $('#bag').append(`<li class='ui-corner-all ui-widget-content'>${name}</li>`);
+}
+
 
 function getPocketDOM(name, quantity=0) {
   return `<div class='pocket'>

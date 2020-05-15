@@ -88,3 +88,15 @@ tr:nth-child(even) {
 #amount {
   color : red;
 }
+
+ul#bag {
+  list-style-type : none;
+}
+
+ul#bag li {
+  float : left;
+  padding : 5px;
+  margin : 2px;
+  background : #E9E9E9;
+}
+
