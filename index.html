@@ -18,8 +18,8 @@
   <body>
     <div id='dialog'> <p> </p> </div>
 
-    <div id ='mainMenu'>
-      <h3 id='userInput'> Enter All Your Coins in Your Pocket </h3>
+    <div id ='mainMenu' class='centerD'>
+      <h3 id='userInput' title='Clicking on this will reset -Place Coins In Vendor Tab-'> Enter All Your Coins in Your Pocket </h3>
       <div id='coinsInPocket' class='menuItem'>
         <fieldset>
         <legend> User input </legend>
@@ -29,10 +29,9 @@
       </div>
 
       <h3 id='insertCoins'> Place Coins In Vendor</h3>
-
       <div id='vendor' class='menuItem flex-container'>
 
-        <div id='userContainer' class='flex-child'>
+        <div id='userContainer' class='flex-child ui-widget-content'>
           <div id='insertCoin'class='my-border'>
             <fieldset>
               <legend> Insert Coin </legend>
@@ -48,14 +47,15 @@
           </div>
           <div class='my-border'>
             <fieldset id='selectItem'>
-              <legend> Select Item * </legend>
+              <legend> Select Item </legend>
               <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
             </fieldset>
           </div>
         </div>
 
 
-        <div class='flex-child'>
+        <div class='flex-child ui-widget-content'>
+          <div class='my-border'>
           <fieldset>
             <legend> Vending Machine </legend>
             <table id='vendingMachine'>
@@ -65,14 +65,11 @@
                 <th> Cost </th>
               </tr>
             </table>
-            <div> Coins Inserted : <span id='amount'>0.00<span> </div>
-            <button id='returnB'> Return </button>
+            <div class='centerD'> Coins Inserted : <span id='amount'>0.00<span> </div>
+            <button id='returnB' class='centerB'> Return </button>
           </fieldset>
-
-
-
+          </div>
         </div>
-
       </div>
 
     </div>

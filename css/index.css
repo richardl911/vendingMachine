@@ -14,11 +14,11 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  text-align : center;
 }
 
 th {
   border : 1px solid black;
-  text-align : left;
   padding : 0px 10px;
 }
 
@@ -29,13 +29,11 @@ th {
 
 .flex-child {
   flex : 1;
-  border : 2px solid black;
+  margin : 0px 5px; 
 }
 
 .my-border {
-  margin : 5px;
-  padding : 2px;
-  border : 1px solid green;
+  padding : 10px 10px;
 }
 
 .pocket {
@@ -49,9 +47,23 @@ th {
 }
 
 .pocket label::first-letter {
-  text-transform: uppercase;
+  text-transform : uppercase;
 }
 
 #amount::before {
   content : "$";
+}
+
+.centerD {
+  margin : auto;
+  width : 50%;
+}
+
+.centerB {
+  margin : 0 auto;
+  display : block;
+}
+
+#insertCoinTable td.name::first-letter {
+  text-transform : uppercase;
 }

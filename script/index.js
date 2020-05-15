@@ -84,7 +84,7 @@ function createVendingTab(){
     vending.addItem(item.name, item.cost, 10);
 
     // Create vending table display
-    $('#vendingMachine').append(getItemDisplayDOM(item.name, item.cost, 10));
+    $('#vendingMachine').append(getItemDisplayDOM(item.name, getDollars(item.cost), 10));
 
     // Create radio button
     $('#selectItem').prepend(getSelectItemDOM(item.name));
@@ -155,9 +155,13 @@ function updateCoinQuantity(name) {
 
 function updateCredit() {
   let credit = vending.getCredit();
-  credit = credit >= 100 ? (credit/100).toFixed(2) : credit;
-  credit = (Math.round(credit * 100) / 100).toFixed(2);
-  $('#amount').text(credit);
+  $('#amount').text(getDollars(credit));
+}
+
+function getDollars(val) {
+  val = val >= 100 ? (val/100).toFixed(2) : val;
+  val = (Math.round(val * 100) / 100).toFixed(2);
+  return val;
 }
 
 function getPocketDOM(name, quantity=0) {
@@ -171,7 +175,7 @@ function getInsertCoinDOM(name, quantity) {
   return `<tr id='${name}_info' class='${name}'>
             <td class='name'> ${name} </td>
             <td class='quantity'> ${quantity} </td>
-            <td> <button id='insert_${name}'></button> </td>
+            <td> <button id='insert_${name}' class='center'></button> </td>
          </tr>`;
 }
 
@@ -179,7 +183,7 @@ function getItemDisplayDOM(name, cost, quantity) {
   return `<tr id='vending_${name}' class='${name}'>
             <td class='name'> ${name} </td>
             <td class='quantity'> ${quantity} </td>
-            <td class='cost'> ${cost} </td>
+            <td class='cost'><span>$</span>${cost}</td>
           </td>`;
 }
 
