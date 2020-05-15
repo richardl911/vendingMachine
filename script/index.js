@@ -1,11 +1,12 @@
 let userCoins = {};
+let vending;
 
 document.addEventListener('DOMContentLoaded', function() {
   /// Configue dialog box
   $('#dialog').dialog({ autoOpen : false });
 
-  createCoinList(coinDef);
-  createVendingTable();
+  createCoinTab(coinDef);
+  createVendingTab(items);
 
   $('h3#insertCoins').on('click', () => {
     console.log('what');
@@ -29,7 +30,7 @@ function animateUI() {
 //  $('#spinner2').spinner();
 }
 
-function createCoinList(coinDef) {
+function createCoinTab(coinDef) {
   // Empty out list
   $('#coinList').empty();
 
@@ -42,7 +43,7 @@ function createCoinList(coinDef) {
 
     // Render coin
     let cSelector = `#coinList input#${name}`;
-    $('#coinList').append(getCoinDOM(name));
+    $('#coinList').append(getPocketDOM(name));
     $(cSelector).spinner();
 
     // Add coin listener
@@ -81,13 +82,22 @@ function isDigit(str) {
 
 
 
-function createVendingTable(){
+function createVendingTab(){
+  // Rend and add items to vending machine
+  vending = new vendingMachine();
+  for(let item of items) {
+    vending.addItem(item.name, item.cost, 10);
+    $('#vendingMachine').append(getItemDisplayDOM(item.name, item.cost, 10));
+  }
+
+  // Rend user input
+  $('#selectItem input').checkboxradio();
   for(let name in userCoins) {
     let coinDef = userCoins[name];
 
-    // Render rows to display coins that can be inserted
+    // Render rows to display coins that can be inserted by the user
     let bSelector = `button#insert_${name}`;
-    $('#insertCoinTable').append(getCoinRowDOM(name, coinDef.quantity));
+    $('#insertCoinTable').append(getInsertDOM(name, coinDef.quantity));
     $(bSelector).button({
       icon : 'ui-icon-plusthick',
       showLabel : false,
@@ -101,6 +111,7 @@ function createVendingTable(){
     }
     $(bSelector).on('click', clickFcn.bind(null));
   }
+
 }
 
 function updateTableQuantity(name=null) {
@@ -118,19 +129,27 @@ function updateTableQuantity(name=null) {
 }
 
 
-
-function getCoinDOM(name, quantity=0) {
+function getPocketDOM(name, quantity=0) {
   return `<div>
             <label for=${name}>${name}</label>
             <input id=${name} name=${name} min='0' placeholder='0' value=${quantity}></input>
           </div>`;
 }
 
-function getCoinRowDOM(name, quantity) {
+function getInsertDOM(name, quantity) {
   return `<tr id='${name}_info' class='${name}'>
             <td class='name'> ${name} </td>
             <td class='quantity'> ${quantity} </td>
             <td> <button id='insert_${name}'></button> </td>
          </tr>`;
 }
+
+function getItemDisplayDOM(name, cost, quantity) {
+  return `<tr id='vending_${name}' class='${name}'>
+            <td class='name'> ${name} </td>
+            <td class='quantity'> ${quantity} </td>
+            <td class='cost'> ${cost} </td>
+          </td>`;
+}
+
 

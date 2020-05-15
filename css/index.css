@@ -1,9 +1,13 @@
 #mainMenu {
-  width : 50%;
+  width : 90%;
 }
 
 .menuItem {
   overflow : hidden !important;
+}
+
+#sum {
+  float : right;
 }
 
 table {
@@ -16,4 +20,20 @@ th {
   border : 1px solid black;
   text-align : left;
   padding : 0px 10px;
+}
+
+
+.flex-container {
+  display : flex;
+}
+
+.flex-child {
+  flex : 1;
+  border : 2px solid black;
+}
+
+.my-border {
+  margin : 5px;
+  padding : 2px;
+  border : 1px solid green;
 }

@@ -9,6 +9,7 @@
 
     <script type='text/javascript' src='./script/index.js'></script>
     <script type='text/javascript' src='./script/inputTypes.js'></script>
+    <script type='text/javascript' src='./script/vendingMachine.js'></script>
 
     <script type='text/javascript' src='./script/lib/jquery-3.3.1.min.js'></script>
     <script type='text/javascript' src='./script/lib/jquery-ui.min.js'></script>
@@ -25,18 +26,49 @@
       </div>
 
       <h3 id='insertCoins'> Place Coins In Vendor</h3>
-      <div id='vendor' class='menuItem'>
-        <p> Insert Coin </p>
 
-        <table id='insertCoinTable'>
-          <tr>
-            <th> Coin Name</th>
-            <th> Available </th>
-            <th> Insert </th>
-          </tr>
-        </table>
+      <div id='vendor' class='menuItem flex-container'>
+
+        <div id='userContainer' class='flex-child'>
+          <div id='insertCoin'class='my-border'>
+            <fieldset>
+              <legend> Insert Coin </legend>
+              <table id='insertCoinTable'>
+                <tr>
+                  <th> Coin Name</th>
+                  <th> Available </th>
+                  <th> Insert </th>
+                </tr>
+              </table>
+            </fieldset>
+
+          </div>
+          <div id='selectItem' class='my-border'>
+            <fieldset>
+              <legend> Select Item * </legend>
+              <label for='radio-1'> New York </label>
+              <input type='radio' name='radio-1', id='radio-1'>
+              <label for='radio-2'> New York </label>
+              <input type='radio' name='radio-1', id='radio-2'>
+              <p> *Must have sufficient fund before selecting </p>
+            </fieldset>
+          </div>
+        </div>
+
+
+        <div class='flex-child'>
+          <div> Vending Machine </div>
+          <table id='vendingMachine'>
+            <tr>
+              <th> Item Name </th>
+              <th> Quantity </th>
+              <th> Cost </th>
+            </tr>
+          </table>
+        </div>
 
       </div>
+
     </div>
 
   </body>
