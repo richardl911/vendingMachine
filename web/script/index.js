@@ -2,7 +2,6 @@ let userCoins = {};
 let vending;
 
 document.addEventListener('DOMContentLoaded', function() {
-
   /// Configue dialog box
   $('#dialog').dialog({
     autoOpen : false,
@@ -13,28 +12,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Create tab with problem statement
   createCoinTab(coinDef);
   createVendingTab(items);
 
-  $('h3#insertCoins').on('click', () => {
-    updateCoinQuantity();
-  });
-
-  $('h3#userInput').on('click', () => {
-    updateUserCoins();
-  });
-
+  renderSubMenu();
 
   $('#returnB').on('click', returnCoins);
-
-  animateUI();
-
 });
 
 
-function animateUI() {
-  // Create menus
+function renderSubMenu() {
+  // Render submenu
   $('#mainMenu').accordion({heightStyle : 'content'});
+
+  // Adding listener to headers (submenus) 
+  $('h3#insertCoins').on('click', () => {
+    updateCoinQuantity();
+  });
+  $('h3#userInput').on('click', () => {
+    updateUserCoins();
+  });
 }
 
 function createCoinTab(coinDef) {
