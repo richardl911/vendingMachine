@@ -85,13 +85,13 @@ document.addEventListener('DOMContentLoaded', function() {
       user :{
         coins : [],                     // Coins gather by user
         itemInBag : [],                 // Items in user's bag
+        picked : '',                    // Item selected by user
       },
       vending : {
         items : [],                     // Items in vending machine
         coinsIn : {},                   // Coins in the vending machine
         sum : 0,                        // Sum of coins in vending machine
-        picked : '',                    // Item selected by user
-      }
+      },
     },
     methods : {
       addCoin : function(name, quantity, val) {
@@ -120,9 +120,9 @@ document.addEventListener('DOMContentLoaded', function() {
           this.user.itemInBag.push(item.name);
 
           // Wait 500 before deselecting radio
-          setTimeout(() => { this.vending.picked = '' }, 500);
+          setTimeout(() => { this.user.picked = '' }, 500);
         } else {
-          this.vending.picked = '';
+          this.user.picked = '';
           if(item.quantity == 0) openDialog('Error', `-${item.name}- is out. Coins are returned.`);
           else openDialog('Error', `You have insufficient fund ($${getDollars(this.vending.sum)}) in the machine to buy -${name}-. Coins are returned.`);
         }

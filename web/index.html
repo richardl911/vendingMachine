@@ -52,7 +52,7 @@
           <fieldset class='fBox' style='text-align:center'> <legend> Select Item </legend>
             <label v-for='item in vending.items' :for='item.name' class='centerT ui-corner-all ui-widget'>
               <div class='pickItem'>
-              <input type='radio' :id='item.name' name='something' v-model='vending.picked' :value='item.name' @change='getItem($event.target)'></input>
+              <input type='radio' :id='item.name' name='something' v-model='user.picked' :value='item.name' @change='getItem($event.target)'></input>
               <label :for='item.name'> {{ item.name }} </label>
               </div>
             </label>

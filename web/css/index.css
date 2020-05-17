@@ -130,4 +130,9 @@ ul#bag li {
 
 button {
   outline : none;
+  user-select : none;
+}
+
+label {
+  user-select : none;
 }
