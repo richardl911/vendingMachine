@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
       coins : [],
       vending : [],
       coinsInVendor : {},
+      itemInBag : [],
       sum : 0,
       picked : '',
     },
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       addItemToVendor : function(name, quantity, cost) {
         let i = this.hasType(this.vending, name);
-        if(i == -1) this.vending.push({ name : name, quantity : 99, cost : cost});
+        if(i == -1) this.vending.push({ name : name, quantity : 2, cost : cost});
         else this.vending[i].quantity += quantity;
       },
       addCoinToVendor : function(name, val) {
@@ -75,19 +76,46 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(this.sum);
       },
       getItem : function(name) {
-        let i = this.hasType(this.vending, name)
-        if(i == -1) return;
-        this.vending[i].quantity--;
-console.log(name, i);
+        let item = this.getElement(this.vending, name)
+        if(item == null) return;
+        
+        if(item.quantity > 0 && this.sum >= item.cost) {
+          item.quantity--;
+          this.itemInBag.push(item.name);
+          this.sum -= item.cost;
+          this.findChange();
+          //send item out
+        }
 
+        this.returnCoins();
+        // Deselect radio button
         setTimeout(() => { vApp.picked = '' }, 750);
+      },
+      returnCoins : function() {
+        for(let coin of this.coins) {
+          if(this.coinsInVendor[coin.name]) coin.quantity += this.coinsInVendor[coin.name]; 
+        }
+        this.coinsInVecdor = {};
+        this.sum = 0;
+      },
+      findChange : function() {
+        let numOfNickel = this.sum/0.05;
+        this.coinsInVendor = {};
+        this.coinsInVendor['nickel'] = numOfNickel;
       },
       hasType : function(array, name) {
         for(let i  = 0; i < array.length; i++) {
           if(array[i].name == name) return i;
         }
         return -1;
-      }, 
+      },
+      getElement : function(array, name) {
+        for(let i  = 0; i < array.length; i++) {
+          if(array[i].name == name) return array[i];
+        }
+        return null;
+      },
+
     }
   })
 
