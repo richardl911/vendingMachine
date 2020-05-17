@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class='coin-count'>
         <label :for='coin.name'>{{coin.name}}</label>
         <input ref='input' v-bind:value='value' v-on:blur='sendValue($event.target.value)' type='number' min='0'></input>
-    </div>
+      </div>
     `,
     methods : {
       sendValue : function(str) {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
     },
     methods : {
-      addCoin : function(name, quantity, val) {
+      addCoinToUser : function(name, quantity, val) {
         let coin = this.getElement(this.user.coins, name);
         if(coin == null) this.user.coins.push({ name : name, quantity : 5, val : val });
         else coin.quantity += quantity;
@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let name = evt.value;
         let item = this.getElement(this.vending.items, name);
         if(item == null) return;
+
+        // See if item can be bought
         if(item.quantity > 0 && this.vending.sum >= item.cost) {
           // Update item status
           item.quantity--;
@@ -127,9 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
           else openDialog('Error', `You have insufficient fund ($${getDollars(this.vending.sum)}) in the machine to buy -${name}-. Coins are returned.`);
         }
   
-        this.returnCoins();
+        this.returnCoinsToUser();
       },
-      returnCoins : function() {
+      returnCoinsToUser : function() {
         for(let coin of this.user.coins) {
           if(this.vending.coinsIn[coin.name]) coin.quantity += this.vending.coinsIn[coin.name]; 
         }
@@ -160,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add definition of coins
   for(let coin of coinDef) {
-    vApp.addCoin(coin.name, coin.quantity, coin.val);
+    vApp.addCoinToUser(coin.name, coin.quantity, coin.val);
     $('.coin-count input').spinner();
   }
   

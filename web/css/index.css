@@ -54,7 +54,7 @@ tr:nth-child(even) {
 }
 
 .coin-count input {
-  width : 100px;
+  width : 120px;
   padding-left : 5px;
 }
 
@@ -108,7 +108,7 @@ ul#bag li {
 
 .insert-coin button {
   font-size : 0.8em;
-  padding : 2px 4px;
+  padding : 2px 6px;
   margin : 5px;
 }
 
