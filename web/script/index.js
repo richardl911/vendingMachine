@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function() {
     mounted : function() {
       $('#app').accordion({heightStyle : 'content'});
       $('#returnB').button();
-      $('.pickItem').checkboxradio();
     }
   })
 

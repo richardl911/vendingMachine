@@ -21,7 +21,7 @@
     <h1 style='text-align:center;font-size:2em' class='ui-widget'> <strong>Vending Machine Emulator</strong> </h1>
     <hr style='margin-bottom:25px'>
 
-    <div id='app'>
+    <div id='app' class='centerD'>
       <!-- 1st menu tab -->
       <h3 id='userInput' title='Clicking will allow you to add more coins if you can find any'> Enter All Your Coins in Your Pocket </h3>
       <div id='coinsInPocket' class='menuItem'>
@@ -36,7 +36,7 @@
       <div id='vendor' class='menuItem flex-container'>
         <!-- user selection -->
         <div id='leftContaier' class='flex-child ui-widget-content'>
-          <fieldset> <legend> Insert Coin </legend>
+          <fieldset class='fBox'> <legend> Insert Coin </legend>
             <table id='insertCoinTable'>
               <thead> <tr>
                 <th>Coin Name</th>
@@ -49,17 +49,17 @@
             </table>
           </fieldset>
 
-          <fieldset> <legend> Select Item </legend>
-            <div class='centerT'>
-            <template v-for='item in vending'>
-              <input type='radio' class='pickItem' :id='item.name' name='something' v-model='picked' :value='item.name' @change='getItem($event.target)'></input>
+          <fieldset class='fBox' style='text-align:center'> <legend> Select Item </legend>
+            <label v-for='item in vending' :for='item.name' class='centerT ui-corner-all ui-widget'>
+              <div class='pickItem'>
+              <input type='radio' :id='item.name' name='something' v-model='picked' :value='item.name' @change='getItem($event.target)'></input>
               <label :for='item.name'> {{ item.name }} </label>
-            </template>
-            </div>
-            <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
+              </div>
+            </label>
+            <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting!!!</p>
           </fieldset>
           
-          <fieldset v-if='itemInBag.length!=0'> <legend> In My Bag </legend>
+          <fieldset v-if='itemInBag.length!=0' class='fBox'> <legend> In My Bag </legend>
             <ul v-for='item in itemInBag' id='bag'>
               <li class='ui-corner-all ui-widget-content'> {{ item }}</li>
             </ul>
@@ -67,7 +67,7 @@
         </div>
         <!-- vendor information -->
         <div id='rightContainer' class='flex-child ui-widget-content'> 
-          <fieldset> <legend> Vending Machine </legend>
+          <fieldset class='fBox'> <legend> Vending Machine </legend>
             <table id='vendingTable'>
               <tr>
                 <th> Item Name </th>

@@ -1,9 +1,9 @@
-#mainMenu {
+#app {
   width : 90%;
 }
 
 .menuItem {
-  overflow : hidden !important;
+
 }
 
 #sum {
@@ -35,8 +35,8 @@ tr:nth-child(even) {
   margin : 0px 5px; 
 }
 
-.my-border {
-  padding : 10px 10px;
+.fBox {
+  margin : 10px 10px;
 }
 
 .coin-count {
@@ -109,6 +109,7 @@ ul#bag li {
 .insert-coin button {
   font-size : 0.8em;
   padding : 2px 4px;
+  margin : 5px;
 }
 
 .select-item {
@@ -116,4 +117,17 @@ ul#bag li {
   margin : 2px;
   padding : 2px 7px 2px 0px;
   border : 1px solid black;
+}
+
+.pickItem {
+  display : inline-block;
+  background : #F6F6F6;
+  padding : 6px 10px;
+  margin : 5px;
+  border-radius : 3px;
+  border : 1px solid rgb(197,197,197);
+}
+
+button {
+  outline : none;
 }
