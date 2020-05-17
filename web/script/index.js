@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setTimeout(() => { this.picked = '' }, 500);
         } else {
           this.picked = '';
+          openDialog('Error', `You have insufficient fund ($${getDollars(this.sum)}) to buy -${name}-. Funds are refunded.`);
         }
   
         this.returnCoins();
@@ -137,3 +138,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+function openDialog(title, context) {
+  $('#dialog').dialog('option', 'title', title);
+  $('#dialog p').text(context);
+  $('#dialog').dialog('open');
+}
+
+function getDollars(val) {
+  val = val >= 100 ? (val/100).toFixed(2) : val;
+  val = (Math.round(val * 100) / 100).toFixed(2);
+  return val;
+}
