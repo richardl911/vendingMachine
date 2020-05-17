@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       addItemToVendor : function(name, quantity, cost) {
         let item = this.getElement(this.vending, name);
-        if(item == null) this.vending.push({ name : name, quantity : 2, cost : cost });
+        if(item == null) this.vending.push({ name : name, quantity : 10, cost : cost });
         else item.quantity += quantity;
       },
       addCoinToVendor : function(name, val) {
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
           this.picked = '';
           if(item.quantity == 0) openDialog('Error', `-${item.name}- is out. Funds are refunded.`);
-          else openDialog('Error', `You have insufficient fund ($${getDollars(this.sum)}) to buy -${name}-. Funds are refunded.`);
+          else openDialog('Error', `You have insufficient fund ($${getDollars(this.sum)}) in the machine to buy -${name}-. Funds are refunded.`);
         }
   
         this.returnCoins();

@@ -59,7 +59,7 @@
             <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
           </fieldset>
           
-          <fieldset> <legend> In My Bag </legend>
+          <fieldset v-if='itemInBag.length!=0'> <legend> In My Bag </legend>
             <ul v-for='item in itemInBag' id='bag'>
               <li class='ui-corner-all ui-widget-content'> {{ item }}</li>
             </ul>
