@@ -35,40 +35,55 @@
       <h3 id='insertCoins'> Place Coins In Vendor</h3>
       <div id='vendor' class='menuItem flex-container'>
         <!-- user selection -->
-        <div>
-          <table id='insertCoinTable'>
-            <thead> <tr>
-              <th>Coin Name</th>
-              <th>Avaliable</th>
-              <th>Insert</th>
-            </tr> </thead>
-            <tbody>
-              <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
-            </tbody>
-          </table>
-          <template v-for='item of vending'>
-            <label> {{ item.name }} </label>
-            <input type='radio' v-model='picked' :value='item.name' @click='getItem($event.target.value)'></input>
-          </template>
-        <span> Picked : {{ picked }} </span>
+        <div id='leftContaier' class='flex-child ui-widget-content'>
+          <fieldset> <legend> Insert Coin </legend>
+            <table id='insertCoinTable'>
+              <thead> <tr>
+                <th>Coin Name</th>
+                <th>Avaliable</th>
+                <th>Insert</th>
+              </tr> </thead>
+              <tbody>
+                <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
+              </tbody>
+            </table>
+          </fieldset>
+
+          <fieldset> <legend> Select Item </legend>
+            <div class='centerT'>
+            <template v-for='item of vending'>
+              <div class='select-item'>
+              <label :for='item.name'> {{ item.name }} </label>
+              <input type='radio' class='pickItem' :id='item.name' v-model='picked' :value='item.name' @mouseup='getItem($event.target)'></input>
+              </div>
+            </template>
+            </div>
+            <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
+          </fieldset>
+          
+          <fieldset> <legend> In My Bag </legend>
+            <ul v-for='item in itemInBag' id='bag'>
+              <li class='ui-corner-all ui-widget-content'> {{ item }}</li>
+            </ul>
+          </fieldset>
         </div>
         <!-- vendor information -->
- <!--
-        <div>
-          <table id='vendingTable'>
-            <tr>
-              <th> Item Name </th>
-              <th> Quantity </th>
-              <th> Cost </th>
-            </tr>
-            <tbody>
-              <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
-            </tbody>
-          </table>
-          <div> Sum : {{ sum }} </div>
-          <button @click='returnCoins'> Return Coins </button>
+        <div id='rightContainer' class='flex-child ui-widget-content'> 
+          <fieldset> <legend> Vending Machine </legend>
+            <table id='vendingTable'>
+              <tr>
+                <th> Item Name </th>
+                <th> Quantity </th>
+                <th> Cost </th>
+              </tr>
+              <tbody>
+                <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
+              </tbody>
+            </table>
+            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>${{ sum }}</span> </div>
+            <button id='returnB' class='centerB' @click='returnCoins'> Return Coins </button>
+          </fieldset>
         </div>
- -->
       </div>
     </div>
   </body>

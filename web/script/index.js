@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     template : `
       <tr class='insert-coin'>
-        <td>{{coin.name}}</td>
+        <td class='name'>{{coin.name}}</td>
         <td>{{coin.quantity}}</td>
-        <td> <button @click='putCoinIn(loc)'> + </button> </td>
+        <td> <button class='ui-corner-all ui-button' @click='putCoinIn(loc)'> + </button> </td>
       </tr>
     `,
   });
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
       coinsInVendor : {},             // Coins in the vending machine
       itemInBag : [],                 // Items in user's bag
       sum : 0,                        // Sum of money in vending machine
-      picked : '',                    // Item selected by user
+      picked : false,                    // Item selected by user
     },
     methods : {
       addCoin : function(name, quantity, val) {
@@ -79,28 +79,29 @@ document.addEventListener('DOMContentLoaded', function() {
         this.coinsInVendor[name] = ++this.coinsInVendor[name] || 1;
         this.sum += val;
       },
-      getItem : function(name) {
-        let item = this.getElement(this.vending, name)
+      getItem : function(evt) {
+        let name = evt.value;
+        let item = this.getElement(this.vending, name);
         if(item == null) return;
-        
         if(item.quantity > 0 && this.sum >= item.cost) {
           item.quantity--;
           this.itemInBag.push(item.name);
           this.sum -= item.cost;
           this.findChange();
-          //send item out
-        }
+        } 
+
+        $(evt.target).prop('checked',false);
 
         this.returnCoins();
 
         // Deselect radio button
-        setTimeout(() => { vApp.picked = '' }, 750);
+        setTimeout(() => { vApp.picked = '' }, 500);
       },
       returnCoins : function() {
         for(let coin of this.coins) {
           if(this.coinsInVendor[coin.name]) coin.quantity += this.coinsInVendor[coin.name]; 
         }
-        this.coinsInVecdor = {};
+        this.coinsInVendor = {};
         this.sum = 0;
       },
       findChange : function() {
@@ -118,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     mounted : function() {
       $('#app').accordion({heightStyle : 'content'});
+      $('#returnB').button();
+      $('.pickItem').checkboxradio();
     }
   })
 
