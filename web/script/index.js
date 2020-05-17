@@ -59,7 +59,7 @@ function createCoinTab(coinDef) {
       // Check if value is a number
       let val = _$.val();
 
-      if(!isDigit(+val)) {
+      if(!isOnlyDigit(val)) {
         openDialog('Error', `${val} is not a valid number!!!`);
         _$.val(userCoins[name].quantity);
         return;
@@ -80,9 +80,9 @@ function openDialog(title, context) {
 }
 
 
-function isDigit(str) {
+function isOnlyDigit(str) {
   if(str.length == 0) return false;
-  return !isNaN(str);
+  return str.match(/[^0-9]/g) == null;
 }
 
 
