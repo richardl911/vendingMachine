@@ -27,7 +27,7 @@
       <div id='coinsInPocket' class='menuItem'>
         <fieldset> <legend> User input </legend>
           <div> Enter the number of coins you have ... </div>
-          <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin' v-model='coin.quantity'></coin-count>
+          <coin-count v-for='(coin,index) in user.coins' :key='index' :coin='coin' v-model='coin.quantity'></coin-count>
         </fieldset>
       </div>
 
@@ -44,23 +44,23 @@
                 <th>Insert</th>
               </tr> </thead>
               <tbody>
-                <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
+                <tr v-for='(coin,index) in user.coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
               </tbody>
             </table>
           </fieldset>
 
           <fieldset class='fBox' style='text-align:center'> <legend> Select Item </legend>
-            <label v-for='item in vending' :for='item.name' class='centerT ui-corner-all ui-widget'>
+            <label v-for='item in vending.items' :for='item.name' class='centerT ui-corner-all ui-widget'>
               <div class='pickItem'>
-              <input type='radio' :id='item.name' name='something' v-model='picked' :value='item.name' @change='getItem($event.target)'></input>
+              <input type='radio' :id='item.name' name='something' v-model='vending.picked' :value='item.name' @change='getItem($event.target)'></input>
               <label :for='item.name'> {{ item.name }} </label>
               </div>
             </label>
-            <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting!!!</p>
+            <p> Note : Please have <strong>sufficient</strong> coins desposited <strong>before</strong> selecting or else coins will returned. </p>
           </fieldset>
           
-          <fieldset v-if='itemInBag.length!=0' class='fBox'> <legend> In My Bag </legend>
-            <ul v-for='item in itemInBag' id='bag'>
+          <fieldset v-if='user.itemInBag.length!=0' class='fBox'> <legend> In My Bag </legend>
+            <ul v-for='item in user.itemInBag' id='bag'>
               <li class='ui-corner-all ui-widget-content'> {{ item }}</li>
             </ul>
           </fieldset>
@@ -75,10 +75,10 @@
                 <th> Cost </th>
               </tr>
               <tbody>
-                <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
+                <tr v-for='(item, index) in vending.items' is='vending-item' :loc='index' :key='index' :item='item'></tr>
               </tbody>
             </table>
-            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>${{ getDollars(sum) }}</span> </div>
+            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>${{ getDollars(vending.sum) }}</span> </div>
             <button id='returnB' class='centerB' @click='returnCoins'> Return Coins </button>
           </fieldset>
         </div>
