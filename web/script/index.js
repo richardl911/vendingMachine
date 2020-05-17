@@ -1,13 +1,24 @@
 let vApp;
 
 document.addEventListener('DOMContentLoaded', function() {
+  /// Configue dialog box
+  $('#dialog').dialog({
+    autoOpen : false,
+    buttons : {
+      "Okay" : function() {
+        $(this).dialog('close');
+      }
+    }
+  });
+
+
   // Gather coins input DOM
   Vue.component('coin-count', {
     props : ['coin'],
     template : `
-      <div class='enter-coin'>
+      <div class='coin-count'>
         <label :for='coin.name'>{{coin.name}}</label>
-        <input :id='coin.name' min='0' v-model.number='coin.quantity'></input>
+        <input :id='coin.name' min='0' v-model.number='coin.quantity' type='number'></input>
       </div>
     `,
   });
@@ -104,12 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return null;
       },
+    },
+    mounted : function() {
+      $('#app').accordion({heightStyle : 'content'});
     }
   })
 
   // Add definition of coins
   for(let coin of coinDef) {
-    vApp.addCoin(coin.name, coin.quantity, coin.val); 
+    vApp.addCoin(coin.name, coin.quantity, coin.val);
+    $('.coin-count input').spinner();
   }
   
   // Add items to vending machine

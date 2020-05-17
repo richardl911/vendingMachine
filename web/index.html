@@ -17,46 +17,59 @@
   </head>
 
   <body>
+    <div id='dialog'> <p> </p> </div>
+    <h1 style='text-align:center;font-size:2em' class='ui-widget'> <strong>Vending Machine Emulator</strong> </h1>
+    <hr style='margin-bottom:25px'>
+
     <div id='app'>
       <!-- 1st menu tab -->
-      <div id='coinCount'>
-        <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin'> </coin-count>
+      <h3 id='userInput' title='Clicking will allow you to add more coins if you can find any'> Enter All Your Coins in Your Pocket </h3>
+      <div id='coinsInPocket' class='menuItem'>
+        <fieldset> <legend> User input </legend>
+          <div> Enter the number of coins you have ... </div>
+          <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin'> </coin-count>
+        </fieldset>
       </div>
 
-      <div>
-        <table id='insertCoinTable'>
-          <thead> <tr>
-            <th>Coin Name</th>
-            <th>Avaliable</th>
-            <th>Insert</th>
-          </tr> </thead>
-          <tbody>
-            <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
-          </tbody>
-        </table>
-        <template v-for='item of vending'>
-          <label> {{ item.name }} </label>
-          <input type='radio' v-model='picked' :value='item.name' @click='getItem($event.target.value)'></input>
-        </template>
-      <span> Picked : {{ picked }} </span>
+      <!-- 2nd menu tab -->
+      <h3 id='insertCoins'> Place Coins In Vendor</h3>
+      <div id='vendor' class='menuItem flex-container'>
+        <!-- user selection -->
+        <div>
+          <table id='insertCoinTable'>
+            <thead> <tr>
+              <th>Coin Name</th>
+              <th>Avaliable</th>
+              <th>Insert</th>
+            </tr> </thead>
+            <tbody>
+              <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
+            </tbody>
+          </table>
+          <template v-for='item of vending'>
+            <label> {{ item.name }} </label>
+            <input type='radio' v-model='picked' :value='item.name' @click='getItem($event.target.value)'></input>
+          </template>
+        <span> Picked : {{ picked }} </span>
+        </div>
+        <!-- vendor information -->
+ <!--
+        <div>
+          <table id='vendingTable'>
+            <tr>
+              <th> Item Name </th>
+              <th> Quantity </th>
+              <th> Cost </th>
+            </tr>
+            <tbody>
+              <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
+            </tbody>
+          </table>
+          <div> Sum : {{ sum }} </div>
+          <button @click='returnCoins'> Return Coins </button>
+        </div>
+ -->
       </div>
-
-      <div>
-        <table id='vendingTable'>
-          <tr>
-            <th> Item Name </th>
-            <th> Quantity </th>
-            <th> Cost </th>
-          </tr>
-          <tbody>
-            <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
-          </tbody>
-        </table>
-        <div> Sum : {{ sum }} </div>
-        <button @click='returnCoins'> Return Coins </button>
-      </div>
-
-
     </div>
   </body>
 </html>
