@@ -51,11 +51,9 @@
 
           <fieldset> <legend> Select Item </legend>
             <div class='centerT'>
-            <template v-for='item of vending'>
-              <div class='select-item'>
+            <template v-for='item in vending'>
               <label :for='item.name'> {{ item.name }} </label>
-              <input type='radio' class='pickItem' :id='item.name' v-model='picked' :value='item.name' @mouseup='getItem($event.target)'></input>
-              </div>
+              <input type='radio' class='pickItem' :id='item.name' name='something' v-model='picked' :value='item.name' @change='getItem($event.target)'></input>
             </template>
             </div>
             <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
