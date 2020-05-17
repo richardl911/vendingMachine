@@ -27,7 +27,7 @@
       <div id='coinsInPocket' class='menuItem'>
         <fieldset> <legend> User input </legend>
           <div> Enter the number of coins you have ... </div>
-          <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin'> </coin-count>
+          <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin' v-model='coin.quantity'></coin-count>
         </fieldset>
       </div>
 

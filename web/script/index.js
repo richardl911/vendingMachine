@@ -14,13 +14,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Gather coins input DOM
   Vue.component('coin-count', {
-    props : ['coin'],
+    props : {
+      coin : {
+        type : Object,
+        default : {},
+      },
+      value :{
+        type : Number,
+        default : 0,
+      }
+    },
     template : `
       <div class='coin-count'>
         <label :for='coin.name'>{{coin.name}}</label>
-        <input :id='coin.name' min='0' v-model.number='coin.quantity' type='number'></input>
-      </div>
+        <input ref='input' v-bind:value='value' v-on:blur='sendValue($event.target.value)' type='number' min='0'></input>
+    </div>
     `,
+    methods : {
+      sendValue : function(str) {
+        if(isOnlyDigit(str)) {
+          this.$emit("input", +str);
+          this.$refs.input.value = +str;
+        } else {
+          openDialog('Error', 'You can only enter in digits.'); 
+          this.$refs.input.value = this.value;
+        }
+      },
+    }
   });
 
   // Insert coins into vending machine DOM
@@ -99,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
           setTimeout(() => { this.picked = '' }, 500);
         } else {
           this.picked = '';
-          openDialog('Error', `You have insufficient fund ($${getDollars(this.sum)}) to buy -${name}-. Funds are refunded.`);
+          if(item.quantity == 0) openDialog('Error', `-${item.name}- is out. Funds are refunded.`);
+          else openDialog('Error', `You have insufficient fund ($${getDollars(this.sum)}) to buy -${name}-. Funds are refunded.`);
         }
   
         this.returnCoins();
@@ -156,4 +177,9 @@ function getDollars(val) {
   val = val >= 100 ? (val/100).toFixed(2) : val;
   val = (Math.round(val * 100) / 100).toFixed(2);
   return val;
+}
+
+function isOnlyDigit(str) {
+  if(str.length == 0) return false;
+  return str.match(/[^0-9]/g) == null;
 }
