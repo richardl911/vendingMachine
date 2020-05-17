@@ -1,12 +1,9 @@
 let vApp;
-let vVending;
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Gather coins input DOM
   Vue.component('coin-count', {
     props : ['coin'],
-    data : function() {
-      return {}
-    },
     template : `
       <div class='enter-coin'>
         <label :for='coin.name'>{{coin.name}}</label>
@@ -15,11 +12,11 @@ document.addEventListener('DOMContentLoaded', function() {
     `,
   });
 
+  // Insert coins into vending machine DOM
   Vue.component('insert-coin', {
     props : ['coin','loc'],
     methods : {
       putCoinIn : function(loc) {
-        console.log(this);
         if(vApp.coins[loc].quantity == 0) return;
         vApp.coins[loc].quantity--;
         vApp.addCoinToVendor(vApp.coins[loc].name, vApp.coins[loc].val);
@@ -34,10 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
     `,
   });
 
+  // Vending item info DOM
    Vue.component('vending-item', {
     props : ['item','loc'],
-    methods : {
-    },
     template : `
       <tr class='vending-items'>
         <td>{{item.name}}</td>
@@ -47,33 +43,30 @@ document.addEventListener('DOMContentLoaded', function() {
     `,
   });
 
-
-
   vApp = new Vue({
     el : '#app',
     data : {
-      coins : [],
-      vending : [],
-      coinsInVendor : {},
-      itemInBag : [],
-      sum : 0,
-      picked : '',
+      coins : [],                     // Coins gather by user
+      vending : [],                   // Items in vending machine
+      coinsInVendor : {},             // Coins in the vending machine
+      itemInBag : [],                 // Items in user's bag
+      sum : 0,                        // Sum of money in vending machine
+      picked : '',                    // Item selected by user
     },
     methods : {
       addCoin : function(name, quantity, val) {
-        let i = this.hasType(this.coins, name);
-        if(i == -1) this.coins.push({ name : name, quantity : 10, val : val });
-        else this.coins[i].quantity += quantity;
+        let coin = this.getElement(this.coins, name);
+        if(coin == null) this.coins.push({ name : name, quantity : 5, val : val });
+        else coin.quantity += quantity;
       },
       addItemToVendor : function(name, quantity, cost) {
-        let i = this.hasType(this.vending, name);
-        if(i == -1) this.vending.push({ name : name, quantity : 2, cost : cost});
-        else this.vending[i].quantity += quantity;
+        let item = this.getElement(this.vending, name);
+        if(item == null) this.vending.push({ name : name, quantity : 2, cost : cost });
+        else item.quantity += quantity;
       },
       addCoinToVendor : function(name, val) {
         this.coinsInVendor[name] = ++this.coinsInVendor[name] || 1;
         this.sum += val;
-      console.log(this.sum);
       },
       getItem : function(name) {
         let item = this.getElement(this.vending, name)
@@ -88,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         this.returnCoins();
+
         // Deselect radio button
         setTimeout(() => { vApp.picked = '' }, 750);
       },
@@ -99,15 +93,10 @@ document.addEventListener('DOMContentLoaded', function() {
         this.sum = 0;
       },
       findChange : function() {
+        // Assumed change can only be returned in nickel
         let numOfNickel = this.sum/0.05;
         this.coinsInVendor = {};
         this.coinsInVendor['nickel'] = numOfNickel;
-      },
-      hasType : function(array, name) {
-        for(let i  = 0; i < array.length; i++) {
-          if(array[i].name == name) return i;
-        }
-        return -1;
       },
       getElement : function(array, name) {
         for(let i  = 0; i < array.length; i++) {
@@ -115,15 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return null;
       },
-
     }
   })
 
-  // Add coin
+  // Add definition of coins
   for(let coin of coinDef) {
     vApp.addCoin(coin.name, coin.quantity, coin.val); 
   }
   
+  // Add items to vending machine
   for(let item of items) {
     vApp.addItemToVendor(item.name, item.quantity, item.cost);
   }
