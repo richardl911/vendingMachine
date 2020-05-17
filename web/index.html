@@ -17,74 +17,47 @@
   </head>
 
   <body>
-    <div id='dialog'> <p> </p> </div>
-    <h1 style='text-align:center;font-size:2em' class='ui-widget'> <strong>Vending Machine Emulator</strong> </h1>
-    <hr style='margin-bottom:25px'>
-    <div id ='mainMenu' class='centerD'>
-      <h3 id='userInput' title='Clicking will allow you to add more coins if you can find any'> Enter All Your Coins in Your Pocket </h3>
-      <div id='coinsInPocket' class='menuItem'>
-        <fieldset>
-        <legend> User input </legend>
-        <div> Enter the number of coins you have ... </div>
-        <div id='coinList'></div>
-        </fieldset>
+    <div id='app'>
+      <!-- 1st menu tab -->
+      <div id='coinCount'>
+        <coin-count v-for='(coin,index) in coins' :key='index' :coin='coin'> </coin-count>
       </div>
 
-      <h3 id='insertCoins'> Place Coins In Vendor</h3>
-      <div id='vendor' class='menuItem flex-container'>
-
-        <div id='userContainer' class='flex-child ui-widget-content'>
-          <div id='insertCoin'class='my-border'>
-            <fieldset>
-              <legend> Insert Coin </legend>
-              <table id='insertCoinTable'>
-                <tr>
-                  <th> Coin Name</th>
-                  <th> Available </th>
-                  <th> Insert </th>
-                </tr>
-              </table>
-            </fieldset>
-
-          </div>
-          <div class='my-border'>
-            <fieldset>
-              <legend> Select Item </legend>
-              <form id='selectItemForm' class='centerT'> </form>
-              <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
-            </fieldset>
-          </div>
-          <div class='my-border'>
-            <fieldset>
-              <legend> In My Bag </legend>
-              <ul id='bag' style='display:none'>
-              </ul>
-            </fieldset>
-          </div>
-        </div>
-
-
-        <div class='flex-child ui-widget-content'>
-          <div class='my-border'>
-          <fieldset>
-            <legend> Vending Machine </legend>
-            <table id='vendingTable'>
-              <tr>
-                <th> Item Name </th>
-                <th> Quantity </th>
-                <th> Cost </th>
-              </tr>
-            </table>
-            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>0.00<span> </div>
-            <button id='returnB' class='centerB'> Return </button>
-          </fieldset>
-          </div>
-        </div>
+      <div>
+        <table id='insertCoinTable'>
+          <thead> <tr>
+            <th>Coin Name</th>
+            <th>Avaliable</th>
+            <th>Insert</th>
+          </tr> </thead>
+          <tbody>
+            <tr v-for='(coin,index) in coins' is='insert-coin' :loc='index' :key='index' :coin='coin'></tr>
+          </tbody>
+        </table>
+        <template v-for='item of vending'>
+          <label> {{ item.name }} </label>
+          <input type='radio' v-model='picked' :value='item.name' @click='getItem($event.target.value)'></input>
+        </template>
+      <span> Picked : {{ picked }} </span>
       </div>
+
+      <div>
+        <table id='vendingTable'>
+          <tr>
+            <th> Item Name </th>
+            <th> Quantity </th>
+            <th> Cost </th>
+          </tr>
+          <tbody>
+            <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
+          </tbody>
+        </table>
+        <div> Sum : {{ sum }} </div>
+        <button @click='picked=""'> Return Coins </button>
+      </div>
+
 
     </div>
-
   </body>
-
 </html>
 
