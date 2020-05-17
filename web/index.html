@@ -52,8 +52,8 @@
           <fieldset> <legend> Select Item </legend>
             <div class='centerT'>
             <template v-for='item in vending'>
-              <label :for='item.name'> {{ item.name }} </label>
               <input type='radio' class='pickItem' :id='item.name' name='something' v-model='picked' :value='item.name' @change='getItem($event.target)'></input>
+              <label :for='item.name'> {{ item.name }} </label>
             </template>
             </div>
             <p> Note : Please have <strong>sufficient</strong> fund <strong>before</strong> selecting</p>
@@ -78,7 +78,7 @@
                 <tr v-for='(item, index) in vending' is='vending-item' :loc='index' :key='index' :item='item'></tr>
               </tbody>
             </table>
-            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>${{ sum }}</span> </div>
+            <div id='creditContainer' class='centerD'> Coins Inserted : <span id='amount'>${{ getDollars(sum) }}</span> </div>
             <button id='returnB' class='centerB' @click='returnCoins'> Return Coins </button>
           </fieldset>
         </div>

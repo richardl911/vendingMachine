@@ -45,11 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Vending item info DOM
    Vue.component('vending-item', {
     props : ['item','loc'],
+    methods : {
+      getDollars : function(val) {
+        return getDollars(val);
+      }
+    },
     template : `
       <tr class='vending-items'>
         <td>{{item.name}}</td>
         <td>{{item.quantity}}</td>
-        <td>{{item.cost}}</td>
+        <td>\${{ getDollars(item.cost) }}</td>
       </tr>
     `,
   });
@@ -108,9 +113,12 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       findChange : function() {
         // Assumed change can only be returned in nickel
-        let numOfNickel = this.sum/0.05;
+        let numOfNickel = Math.round(this.sum/0.05);
         this.coinsInVendor = {};
         this.coinsInVendor['nickel'] = numOfNickel;
+      },
+      getDollars : function(val) {
+        return getDollars(val);
       },
       getElement : function(array, name) {
         for(let i  = 0; i < array.length; i++) {
