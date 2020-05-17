@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     props : ['coin','loc'],
     methods : {
       putCoinIn : function(loc) {
+        closeDialog();
         if(vApp.user.coins[loc].quantity == 0) return;
         vApp.user.coins[loc].quantity--;
         vApp.addCoinToVendor(vApp.user.coins[loc].name, vApp.user.coins[loc].val);
@@ -177,6 +178,11 @@ function openDialog(title, context) {
   $('#dialog p').text(context);
   $('#dialog').dialog('open');
 }
+
+function closeDialog() {
+  $('#dialog').dialog('close');
+}
+
 
 function getDollars(val) {
   val = val >= 100 ? (val/100).toFixed(2) : val;
