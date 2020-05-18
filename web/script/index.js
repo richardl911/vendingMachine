@@ -15,14 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Gather coins input DOM
   Vue.component('coin-count', {
     props : {
-      coin : {
-        type : Object,
-        default : {},
-      },
-      value :{
-        type : Number,
-        default : 0,
-      }
+      coin  : { type : Object, default : {} },
+      value : { type : Number, default : 0  }
     },
     template : `
       <div class='coin-count'>
@@ -33,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     methods : {
       sendValue : function(str) {
         if(isOnlyDigit(str)) {
-          this.$emit("input", +str);
+          this.$emit('input', +str);
           this.$refs.input.value = +str;
         } else {
           openDialog('Error', 'You can only enter in digits from 0 to 9.'); 
@@ -45,27 +39,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Insert coins into vending machine DOM
   Vue.component('insert-coin', {
-    props : ['coin','loc'],
+    props : {
+      coin : { type : Object },
+      loc  : { type : Number }
+    },
     methods : {
-      putCoinIn : function(loc) {
+      putCoinIn : function() {
         closeDialog();
-        if(vApp.user.coins[loc].quantity == 0) return;
-        vApp.user.coins[loc].quantity--;
-        vApp.addCoinToVendor(vApp.user.coins[loc].name, vApp.user.coins[loc].val);
+        if(this.coin.quantity == 0) return;
+        this.$emit('input', --this.coin.quantity);
+        vApp.addCoinToVendor(this.coin.name, this.coin.val);
+        return;
       }
     },
     template : `
       <tr class='insert-coin'>
         <td class='name'>{{coin.name}}</td>
         <td>{{coin.quantity}}</td>
-        <td> <button class='ui-corner-all ui-button' @click='putCoinIn(loc)'> + </button> </td>
+        <td> <button class='ui-corner-all ui-button' @click='putCoinIn'> + </button> </td>
       </tr>
     `,
   });
 
   // Vending item info DOM
    Vue.component('vending-item', {
-    props : ['item','loc'],
+    props : ['item'],
     methods : {
       getDollars : function(val) {
         return getDollars(val);
