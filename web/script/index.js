@@ -93,12 +93,12 @@ document.addEventListener('DOMContentLoaded', function() {
       },
     },
     methods : {
-      addCoinToUser : function(name, quantity, val) {
+      addCoinToUser : function(name, quantity=5, val) {
         let coin = this.getElement(this.user.coins, name);
-        if(coin == null) this.user.coins.push({ name : name, quantity : 5, val : val });
+        if(coin == null) this.user.coins.push({ name : name, quantity : quantity, val : val });
         else coin.quantity += quantity;
       },
-      addItemToVendor : function(name, quantity, cost) {
+      addItemToVendor : function(name, quantity=10, cost) {
         let item = this.getElement(this.vending.items, name);
         if(item == null) this.vending.items.push({ name : name, quantity : quantity, cost : cost });
         else item.quantity += quantity;
