@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       addItemToVendor : function(name, quantity, cost) {
         let item = this.getElement(this.vending.items, name);
-        if(item == null) this.vending.items.push({ name : name, quantity : 10, cost : cost });
+        if(item == null) this.vending.items.push({ name : name, quantity : quantity, cost : cost });
         else item.quantity += quantity;
       },
       addCoinToVendor : function(name, val) {

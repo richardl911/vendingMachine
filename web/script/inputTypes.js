@@ -5,7 +5,7 @@ let coinDef = [
 ];
 
 let items = [
-  { name : 'item1', cost : 0.55 },
-  { name : 'item2', cost : 0.70 },
-  { name : 'item3', cost : 0.75 },
+  { name : 'item1', cost : 0.55, quantity : 10 },
+  { name : 'item2', cost : 0.70, quantity : 10 },
+  { name : 'item3', cost : 0.75, quantity : 10 },
 ];
